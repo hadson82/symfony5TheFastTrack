@@ -16,7 +16,7 @@ class ConferenceController extends AbstractController
 
     private $twig;
 
-    public function __constructor(Environment $twig)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
     }
@@ -29,7 +29,6 @@ class ConferenceController extends AbstractController
     public function index(ConferenceRepository $conferenceRepository){
 
 
-
         return new Response($this->twig->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll(),
         ]));
@@ -38,10 +37,14 @@ class ConferenceController extends AbstractController
 
     /**
      * @Route("/conference/{id}", name="conference")
+     * @param Environment $twig
      * @param Request $request
      * @param Conference $conference
      * @param CommentRepository $commentRepository
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function show(Request $request, Conference $conference, CommentRepository $commentRepository)
     {

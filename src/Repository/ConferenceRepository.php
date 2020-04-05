@@ -20,7 +20,7 @@ class ConferenceRepository extends ServiceEntityRepository
 
     public function findAll()
     {
-        return $this->findBy([], ['year' => 'ASC', 'city' => 'ASC']);
+        return $this->findBy([], ['year' => 'DESC', 'city' => 'DESC']);
     }
 
     // /**
