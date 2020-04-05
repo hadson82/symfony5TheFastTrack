@@ -8,11 +8,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ConferenceRepository;
 use Twig\Environment;
+use App\Entity\Conference;
+use App\Repository\CommentRepository;
 
 class ConferenceController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")
+     * @param Environment $twig
+     * @param ConferenceRepository $conferenceRepository
+     * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function index(Environment $twig, ConferenceRepository $conferenceRepository){
 
@@ -20,6 +28,17 @@ class ConferenceController extends AbstractController
             'conferences' => $conferenceRepository->findAll(),
         ]));
 
+    }
+
+    /**
+     * @Route("/conference/{id}", name="conference")
+     */
+    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository)
+    {
+        return new Response($twig->render('conference/show.html.twig', [
+            'conference' => $conference,
+            'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt'=> 'DESC']),
+        ]));
     }
 
 }
