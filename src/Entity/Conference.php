@@ -38,6 +38,11 @@ class Conference
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -83,6 +88,20 @@ class Conference
 
         return $this;
     }
+
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
+
 
     /**
      * @return Collection|Comment[]
