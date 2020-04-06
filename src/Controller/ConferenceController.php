@@ -25,6 +25,9 @@ class ConferenceController extends AbstractController
      * @Route("/", name="homepage")
      * @param ConferenceRepository $conferenceRepository
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function index(ConferenceRepository $conferenceRepository){
 
@@ -36,8 +39,7 @@ class ConferenceController extends AbstractController
     }
 
     /**
-     * @Route("/conference/{id}", name="conference")
-     * @param Environment $twig
+     * @Route("/conference/{slug}", name="conference")
      * @param Request $request
      * @param Conference $conference
      * @param CommentRepository $commentRepository
