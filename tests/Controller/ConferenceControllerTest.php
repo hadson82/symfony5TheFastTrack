@@ -15,4 +15,20 @@ class ConferenceControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Give your feedback');
     }
+
+    public function testConferencePage()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+
+
+        $this->assertCount(2,$crawler->filter('h4'));
+
+        $client->clickLink('View');
+
+        $this->assertPageTitleContains('Conference Guestbook-New-York 2020');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h2', 'New-York');
+        $this->assertSelectorExists('div:contains("There are 1 comments")');
+    }
 }
